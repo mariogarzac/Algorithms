@@ -12,7 +12,34 @@
 using namespace std;
 
 int readFiles(int arr[], int n){
-  
+    
+    for (int i = 0; i < n; i++){
+                
+    cout << "File Name " << endl;
+    cin >> fileName;
+    inFile.open("/Users/mariogarza/desktop/" + fileName);
+    
+    if (!inFile.is_open())
+    {
+        cout << "No se abrió. Checar PATH" << endl;
+        exit(1);
+        
+    }else{
+        while (inFile >> num)
+        {
+            arr[num - 1] += 1;
+        }
+    }
+    //Loop para checar cual es el valor más repetido de los archivos
+    for (int i = 0; i < 100; i++)
+    {
+        if (arr[i] >= biggest)
+        {
+            biggest = arr[i];
+            repeat = i;
+        }
+    }
+    
     return 0;
 }
 
@@ -34,6 +61,7 @@ void getCommonGrade(){
     cin >> n;
     //Loop para preguntar el nombre de los archivos y sumar sus repeticiones al arreglo.
     
+    /*
     for (int i = 0; i < n; i++){
                     
         cout << "File Name " << endl;
@@ -60,6 +88,7 @@ void getCommonGrade(){
                 repeat = i;
             }
         }
+        */
         
         //Cierra el archivo para poder continuar leyendo.
         inFile.close();
