@@ -11,65 +11,47 @@
 
 using namespace std;
 
-//Funcion que lee archivos y suma la repetición de cada numero en un arreglo. Despliega el numero más repetido y sus repeticiones.
-void getCommonGrade(){
-    
+//Función que retorna el valor de la calificación más común en los archivos.
+int getCommonGrade(int n){
     fstream inFile;
-    string fileName = " ";
-    
-    int num;
-    int n = 0;
-    int arr[100] = {0};
-    
+    string fileName;
     int biggest = 0;
-    int repeat = 0;
+    int arr[100] ={0};
+    int num = 0;
     
-    cout << "Numero de archivos ";
-    cin >> n;
-    //Loop para preguntar el nombre de los archivos y sumar sus repeticiones al arreglo.
-    
+    //Loop que pide el nombre del archivo que se leerá.
     for (int i = 0; i < n; i++){
-                    
-        cout << "File Name " << endl;
+        cout << "File name ";
         cin >> fileName;
         inFile.open("/Users/mariogarza/desktop/" + fileName);
         
-        if (!inFile.is_open())
-        {
-            cout << "No se abrió. Checar PATH" << endl;
+        //If que revisa que el archivo se abra correctamente. Si se abre, sumará todos los valores en sus respectivas casillas.
+        if (!inFile.is_open()){
+            cout << "Error al abrir. Revisa el PATH";
             exit(1);
-            
         }else{
-            while (inFile >> num)
-            {
+            while(inFile >> num){
                 arr[num - 1] += 1;
             }
         }
-        //Loop para checar cual es el valor más repetido de los archivos
-        for (int i = 0; i < 100; i++)
-        {
-            if (arr[i] >= biggest)
-            {
-                biggest = arr[i];
-                repeat = i;
-            }
-        }
         
-        //Cierra el archivo para poder continuar leyendo.
         inFile.close();
         inFile.clear();
     }
-    //Despliega el numero más repetido y sus repeticiones
-    cout << repeat + 1 << endl;
-    cout << biggest << endl;
-     
+    
+    //Loop que busca el valor más repetido
+    for (int i = 0; i < 100; i++){
+        if (arr[i] > biggest)
+        {
+            biggest = i;
+        }
+    }
+    return biggest + 1;
 }
-
 
 int main(int argc, const char * argv[]) {
     
-    getCommonGrade();
+    cout << getCommonGrade(2) << endl;
     
     return 0;
 }
-
