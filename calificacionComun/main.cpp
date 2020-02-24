@@ -6,8 +6,11 @@
 //  Copyright © 2020 Mario Garza Chapa. All rights reserved.
 //
 
-#include <iostream>
+#include <algorithm>
 #include <fstream>
+#include <iostream>
+#include <vector>
+
 
 using namespace std;
 
@@ -47,6 +50,39 @@ int getCommonGrade(int n){
         }
     }
     return biggest + 1;
+}
+
+int commonGrade(int n){
+    fstream inFile;
+    string fileName;
+    int num = 0;
+    int common = 0;
+    vector<int> grades;
+    
+    for(int i = 0; i < n; i++){
+        cout << "File name ";
+        cin >> fileName;
+        inFile.open("/Users/mariogarza/desktop/" + fileName);
+        
+        if (!inFile.is_open()){
+            cout << "Error al abrir. Revisa el PATH.";
+        }else{
+            while(inFile >> num){
+                grades.push_back(num);
+            }
+        }
+        
+    }
+    
+    sort(grades.begin(),grades.end());
+    
+    for (const auto &i: grades){
+        if (grades[i] == grades[i + 1]){
+            common += 1;
+        }
+    }
+    
+    return 0;
 }
 
 int main(int argc, const char * argv[]) {
