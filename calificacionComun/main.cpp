@@ -6,105 +6,121 @@
 //  Copyright © 2020 Mario Garza Chapa. All rights reserved.
 //
 
-#include <iostream>
+#include <algorithm>
 #include <fstream>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
-int readFiles(int arr[], int n){
-    
-    for (int i = 0; i < n; i++){
-                
-    cout << "File Name " << endl;
-    cin >> fileName;
-    inFile.open("/Users/mariogarza/desktop/" + fileName);
-    
-    if (!inFile.is_open())
-    {
-        cout << "No se abrió. Checar PATH" << endl;
-        exit(1);
-        
-    }else{
-        while (inFile >> num)
-        {
-            arr[num - 1] += 1;
-        }
-    }
-    //Loop para checar cual es el valor más repetido de los archivos
-    for (int i = 0; i < 100; i++)
-    {
-        if (arr[i] >= biggest)
-        {
-            biggest = arr[i];
-            repeat = i;
-        }
-    }
-    
-    return 0;
-}
-
-
-//Funcion que lee archivos y suma la repetición de cada numero en un arreglo. Despliega el numero más repetido y sus repeticiones.
-void getCommonGrade(){
-    
+//Función que retorna el valor de la calificación más común en los archivos.
+void commonGradeArray(int n){
     fstream inFile;
-    string fileName = " ";
+    string fileName;
     
-    int num;
-    int n = 0;
-    int arr[100] = {0};
+    int num = 0;
     
-    int biggest = 0;
-    int repeat = 0;
+    int repMax = 0;
+    int califMax = 0;
+    int arr[100] ={0};
     
-    cout << "Numero de archivos ";
-    cin >> n;
-    //Loop para preguntar el nombre de los archivos y sumar sus repeticiones al arreglo.
-    
-    /*
+    //Loop que pide el nombre del archivo que se leerá.
     for (int i = 0; i < n; i++){
-                    
-        cout << "File Name " << endl;
+        cout << "File name ";
         cin >> fileName;
         inFile.open("/Users/mariogarza/desktop/" + fileName);
         
-        if (!inFile.is_open())
-        {
-            cout << "No se abrió. Checar PATH" << endl;
+        //If que revisa que el archivo se abra correctamente. Si se abre, sumará todos los valores en sus respectivas casillas.
+        if (!inFile.is_open()){
+            cout << "Error al abrir. Revisa el PATH" << endl;
             exit(1);
-            
         }else{
-            while (inFile >> num)
-            {
+            while(inFile >> num){
                 arr[num - 1] += 1;
             }
         }
-        //Loop para checar cual es el valor más repetido de los archivos
-        for (int i = 0; i < 100; i++)
-        {
-            if (arr[i] >= biggest)
-            {
-                biggest = arr[i];
-                repeat = i;
-            }
-        }
-        */
         
-        //Cierra el archivo para poder continuar leyendo.
         inFile.close();
-        inFile.clear();
     }
-    //Despliega el numero más repetido y sus repeticiones
-    cout << repeat + 1 << endl;
-    cout << biggest << endl;
-     
+    
+    //Loop que busca el valor más repetido
+    for (int i = 0; i < 100; i++){
+        if (arr[i] >= repMax)
+        {
+            repMax = arr[i];
+            califMax = i;
+        }
+    }
+    
+    cout << califMax + 1 << " " << repMax;
 }
 
+void commonGradeVector(int n){
+    fstream inFile;
+    string fileName;
+    vector<int> grades;
+    
+    int num = 0;
 
+    for(int i = 0; i < n; i++){
+        cout << "File name ";
+        cin >> fileName;
+        inFile.open("/Users/mariogarza/desktop/" + fileName);
+        
+        if (!inFile.is_open()){
+            cout << "Error al abrir. Revisa el PATH." << endl;
+            exit(1);
+        }else{
+            while(inFile >> num){
+                grades.push_back(num);
+            }
+        }
+    }
+    
+    sort(grades.begin(),grades.end());
+    
+    int repMax = 0;
+    int califMax = grades[0];
+    int repTmp = 0;
+    int califTmp = 0;
+    int i = 1;
+
+    while (grades[i] == califMax)
+    {
+        repMax += 1;
+        i++;
+    }
+    
+    while (i < grades.size())
+    {
+        if (grades[i] == grades[i - 1])
+        {
+            repTmp += 1;
+            califTmp = grades[i];
+        }else{
+            if(repTmp >= repMax){
+                repMax = repTmp;
+                califMax = califTmp;
+            }
+            repTmp = 0;
+            califTmp = 0;
+        }
+        
+        i++;
+    }
+    if(repTmp >= repMax){
+        repMax = repTmp;
+        califMax = califTmp;
+    }
+    
+    cout << "RESULTADOS: " << califMax << " " << repMax << endl;
+}
+ 
+// 71 2326 calif1.txt
 int main(int argc, const char * argv[]) {
     
-    getCommonGrade();
+    //commonGradeVector(1);
+    commonGradeArray(1);
     
     return 0;
 }
-
