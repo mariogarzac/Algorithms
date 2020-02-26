@@ -13,6 +13,8 @@
 
 using namespace std;
 
+//hola
+
 //Función que retorna el valor de la calificación más común en los archivos.
 void commonGradeArray(int n){
     fstream inFile;
