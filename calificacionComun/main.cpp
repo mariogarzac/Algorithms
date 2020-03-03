@@ -13,9 +13,15 @@
 
 using namespace std;
 
-//hola
+/*
+ MARIO GARZA
+ A01720245
+ 
+ PROBLEMAS #1 Y #2 DE LA TAREA #1.2
+*/
 
-//Función que retorna el valor de la calificación más común en los archivos.
+//Función que imprime la calificación y sus repeticiones más común en los archivos.
+//Esta función toma de parametro la cantidad de archivos que se desea leer.
 void commonGradeArray(int n){
     fstream inFile;
     string fileName;
@@ -57,6 +63,8 @@ void commonGradeArray(int n){
     cout << califMax + 1 << " " << repMax;
 }
 
+//Función que imprime la calificación y sus repeticiones más común en los archivos.
+//Esta función toma de parametro la cantidad de archivos que se desea leer.
 void commonGradeVector(int n){
     fstream inFile;
     string fileName;
@@ -64,6 +72,7 @@ void commonGradeVector(int n){
     
     int num = 0;
 
+    //Loop para leer los datos de los archivos.
     for(int i = 0; i < n; i++){
         cout << "File name ";
         cin >> fileName;
@@ -86,13 +95,15 @@ void commonGradeVector(int n){
     int repTmp = 0;
     int califTmp = 0;
     int i = 1;
-
+    
+    //Loop que guarda la cantidad de repeticiones de la primera calificación.
     while (grades[i] == califMax)
     {
         repMax += 1;
         i++;
     }
     
+    //Loop que compara las repeticiones de la calificación anterior y la siguiente.
     while (i < grades.size())
     {
         if (grades[i] == grades[i - 1])
@@ -118,11 +129,12 @@ void commonGradeVector(int n){
     cout << "RESULTADOS: " << califMax << " " << repMax << endl;
 }
  
-// 71 2326 calif1.txt
+
+
+
 int main(int argc, const char * argv[]) {
     
-    //commonGradeVector(1);
-    commonGradeArray(1);
+    
     
     return 0;
 }
